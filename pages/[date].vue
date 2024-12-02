@@ -10,6 +10,25 @@ const days = ref(0)
 const months = ref(0)
 const years = ref(0)
 
+const secondPrecent = computed(() => {
+  return ((miliseconds.value % 1000) / 1000 ) * 100
+})
+const minutePrecent = computed(() => {
+  return ((miliseconds.value % 60000) / 60000 ) * 100
+})
+const hourPrecent = computed(() => {
+  return ((miliseconds.value % 3600000) / 3600000 ) * 100
+})
+const dayPrecent = computed(() => {
+  return ((miliseconds.value % 86400000) / 86400000 ) * 100
+})
+const monthPrecent = computed(() => {
+  return ((miliseconds.value % 2592000000) / 2592000000 ) * 100
+})
+const yearPrecent = computed(() => {
+  return ((miliseconds.value % 31536000000) / 31536000000 ) * 100
+})
+
 const fillValues = () => {
   const now = new Date()
   let diff = finalDate.getTime() - now.getTime();
@@ -94,33 +113,54 @@ onMounted(() => {
       </div>
 
       <div class="grid grid-cols-2 gap-6">
-        <div class="bg-gray-800 p-6 rounded-lg shadow-lg transform hover:scale-105 transition duration-300">
-          <p class="text-sm uppercase text-gray-400 mb-2">Milliseconds</p>
-          <p class="text-3xl font-bold">{{ miliseconds }}</p>
+        <div class="bg-gray-800 overflow-clip rounded-lg shadow-lg transform hover:scale-105 transition duration-300">
+          <div class="p-6">
+            <p class="text-sm uppercase text-gray-400 mb-2">Milliseconds</p>
+            <p class="text-3xl font-bold">{{ miliseconds }}</p>
+          </div>
+
         </div>
-        <div class="bg-gray-800 p-6 rounded-lg shadow-lg transform hover:scale-105 transition duration-300">
-          <p class="text-sm uppercase text-gray-400 mb-2">Full Seconds</p>
-          <p class="text-3xl font-bold">{{ seconds }}</p>
+        <div class="bg-gray-800  rounded-lg shadow-lg transform hover:scale-105 transition duration-300">
+          <div class="p-6">
+            <p class="text-sm uppercase text-gray-400 mb-2">Full Seconds</p>
+            <p class="text-3xl font-bold">{{ seconds }}</p>
+          </div>
+          <div class="pcbar" :style="`width: ${secondPrecent}%`"></div>
         </div>
-        <div class="bg-gray-800 p-6 rounded-lg shadow-lg transform hover:scale-105 transition duration-300">
-          <p class="text-sm uppercase text-gray-400 mb-2">Full Minutes</p>
-          <p class="text-3xl font-bold">{{ minutes }}</p>
+        <div class="bg-gray-800 rounded-lg shadow-lg transform hover:scale-105 transition duration-300">
+          <div class="p-6">
+            <p class="text-sm uppercase text-gray-400 mb-2">Full Minutes</p>
+            <p class="text-3xl font-bold">{{ minutes }}</p>
+          </div>
+          <div class="pcbar" :style="`width: ${minutePrecent}%`"></div>
         </div>
-        <div class="bg-gray-800 p-6 rounded-lg shadow-lg transform hover:scale-105 transition duration-300">
-          <p class="text-sm uppercase text-gray-400 mb-2">Full Hours</p>
-          <p class="text-3xl font-bold">{{ hours }}</p>
+        <div class="bg-gray-800 rounded-lg shadow-lg transform hover:scale-105 transition duration-300">
+          <div class="p-6">
+            <p class="text-sm uppercase text-gray-400 mb-2">Full Hours</p>
+            <p class="text-3xl font-bold">{{ hours }}</p>
+          </div>
+          <div class="pcbar" :style="`width: ${hourPrecent}%`"></div>
         </div>
-        <div class="bg-gray-800 p-6 rounded-lg shadow-lg transform hover:scale-105 transition duration-300">
-          <p class="text-sm uppercase text-gray-400 mb-2">Full Days</p>
-          <p class="text-3xl font-bold">{{ days }}</p>
+        <div class="bg-gray-800 rounded-lg shadow-lg transform hover:scale-105 transition duration-300">
+          <div class="p-6">
+            <p class="text-sm uppercase text-gray-400 mb-2">Full Days</p>
+            <p class="text-3xl font-bold">{{ days }}</p>
+          </div>
+          <div class="pcbar" :style="`width: ${dayPrecent}%`"></div>
         </div>
-        <div class="bg-gray-800 p-6 rounded-lg shadow-lg transform hover:scale-105 transition duration-300">
-          <p class="text-sm uppercase text-gray-400 mb-2">Full Months</p>
-          <p class="text-3xl font-bold">{{ months }}</p>
+        <div class="bg-gray-800 rounded-lg shadow-lg transform hover:scale-105 transition duration-300">
+          <div class="p-6">
+            <p class="text-sm uppercase text-gray-400 mb-2">Full Months</p>
+            <p class="text-3xl font-bold">{{ months }}</p>
+          </div>
+          <div class="pcbar" :style="`width: ${monthPrecent}%`"></div>
         </div>
-        <div class="bg-gray-800 p-6 rounded-lg shadow-lg transform hover:scale-105 transition duration-300 col-span-2">
-          <p class="text-sm uppercase text-gray-400 mb-2"> Full Years</p>
-          <p class="text-3xl font-bold">{{ years }}</p>
+        <div class="bg-gray-800 rounded-lg shadow-lg transform hover:scale-105 transition duration-300 col-span-2">
+          <div class="p-6">
+            <p class="text-sm uppercase text-gray-400 mb-2"> Full Years</p>
+            <p class="text-3xl font-bold">{{ years }}</p>
+          </div>
+          <div class="pcbar" :style="`width: ${yearPrecent}%`"></div>
         </div>
       </div>
     </div>
@@ -128,6 +168,11 @@ onMounted(() => {
 </template>
 
 <style scoped>
+.pcbar {
+  background-color: #ff006e;
+  height: 10px;
+  border-radius: 16px;
+}
 @keyframes fadeIn {
   from { opacity: 0; }
   to   { opacity: 1; }
